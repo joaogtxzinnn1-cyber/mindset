@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7c3aed">
+<meta name="description" content="MINDSET — organização, criação de sites e prospecção.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MINDSET">
+
+<link rel="manifest" href="./manifest.webmanifest">
+
+<title>MINDSET</title>
+
+<style>
+:root{
+  --accent:#7c3aed;
+  --accent2:#9f67ff;
+  --bg:#08080b;
+  --surface:#111116;
+  --surface2:#17171e;
+  --surface3:#202029;
+  --text:#f7f7fb;
+  --muted:#9a9aa8;
+  --border:#292934;
+  --danger:#ef4444;
+  --success:#22c55e;
+  --warning:#f59e0b;
+  --radius:18px;
+  --font:15px;
+  --gap:16px;
+  --shadow:0 18px 50px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:var(--font);
+  min-height:100vh;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+body.light{
+  --bg:#f5f5f8;
+  --surface:#fff;
+  --surface2:#f0f0f5;
+  --surface3:#e6e6ed;
+  --text:#111116;
+  --muted:#666674;
+  --border:#d9d9e2;
+  --shadow:0 18px 45px rgba(20,20,40,.10);
+}
+
+body.compact{--gap:10px}
+body.spaced{--gap:22px}
+body.small{--font:13px}
+body.large{--font:17px}
+
+body.square{--radius:5px}
+body.soft{--radius:12px}
+body.rounded{--radius:25px}
+
+body.glass .card,
+body.glass .topbar,
+body.glass .drawer{
+  background:color-mix(in srgb,var(--surface) 78%,transparent);
+  backdrop-filter:blur(18px);
+}
+
+body.glow .btn-primary{
+  box-shadow:0 0 28px color-mix(in srgb,var(--accent) 45%,transparent);
+}
+
+body.anim-off *{
+  transition:none!important;
+  animation:none!important;
+}
+
+body.anim-soft *{
+  transition:.15s ease;
+}
+
+body.anim-full *{
+  transition:.25s ease;
+}
+
+.app{min-height:100vh}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:30;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(15px);
+}
+
+.brand{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:19px;
+}
+
+main{
+  width:min(100%,900px);
+  margin:auto;
+  padding:24px 16px 100px;
+}
+
+.screen{display:none}
+.screen.active{display:block}
+
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(27px,7vw,42px);line-height:1.05}
+h2{font-size:24px}
+h3{font-size:17px}
+
+.muted{color:var(--muted)}
+.small-text{font-size:13px;color:var(--muted)}
+
+.hero{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:30px 0;
+}
+
+.logo{
+  width:70px;
+  height:70px;
+  border-radius:22px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:900;
+  margin-bottom:25px;
+  box-shadow:0 15px 45px color-mix(in srgb,var(--accent) 35%,transparent);
+}
+
+.eyebrow{
+  color:var(--accent2);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:620px;
+}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  margin-bottom:var(--gap);
+  box-shadow:var(--shadow);
+}
+
+.grid{
+  display:grid;
+  gap:var(--gap);
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+@media(max-width:600px){
+  .grid-2{grid-template-columns:1fr}
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.stat{
+  padding:16px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:850;
+  margin-top:6px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:8px;
+  font-weight:650;
+}
+
+.field{margin-bottom:16px}
+
+input,textarea,select{
+  width:100%;
+  padding:13px 14px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  outline:none;
+  color:var(--text);
+  background:var(--surface2);
+}
+
+textarea{
+  min-height:140px;
+  resize:vertical;
+  line-height:1.6;
+}
+
+input:focus,textarea:focus,select:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+
+.btn{
+  border:0;
+  min-height:46px;
+  padding:0 17px;
+  border-radius:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-weight:750;
+}
+
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+}
+
+.btn-secondary{
+  background:var(--surface2);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.btn-danger{
+  background:color-mix(in srgb,var(--danger) 15%,var(--surface));
+  color:#ff7777;
+  border:1px solid color-mix(in srgb,var(--danger) 35%,var(--border));
+}
+
+.btn-success{
+  background:var(--success);
+  color:#fff;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.actions .btn{
+  flex:1;
+  min-width:150px;
+}
+
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:0;
+  background:none;
+  color:var(--muted);
+  padding:0;
+  margin-bottom:20px;
+}
+
+.progress{
+  height:8px;
+  background:var(--surface3);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.progress > div{
+  height:100%;
+  background:var(--accent);
+  border-radius:99px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+@media(max-width:450px){
+  .option-grid{grid-template-columns:1fr}
+}
+
+.option{
+  text-align:left;
+  padding:17px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--surface2);
+  color:var(--text);
+}
+
+.option.selected{
+  border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 14%,var(--surface2));
+  box-shadow:0 0 0 1px var(--accent);
+}
+
+.option strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.choice-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+  display:inline-block;
+  margin-right:7px;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.list-item{
+  padding:15px;
+  border:1px solid var(--border);
+  background:var(--surface2);
+  border-radius:14px;
+}
+
+.list-item-header{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.tag{
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:99px;
+  background:color-mix(in srgb,var(--accent) 15%,var(--surface));
+  color:var(--accent2);
+  font-size:11px;
+  font-weight:750;
+}
+
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
+}
+
+.drawer-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:rgba(0,0,0,.6);
+}
+
+.drawer-backdrop.open{display:block}
+
+.drawer{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:min(88vw,350px);
+  z-index:51;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  transform:translateX(-105%);
+  overflow-y:auto;
+  padding:18px;
+}
+
+.drawer.open{transform:translateX(0)}
+
+.drawer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:12px;
+}
+
+.menu-section{
+  margin:18px 0 7px;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+.menu-item{
+  width:100%;
+  text-align:left;
+  border:0;
+  color:var(--text);
+  background:none;
+  padding:12px;
+  border-radius:11px;
+}
+
+.menu-item:hover{
+  background:var(--surface2);
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  transform:translate(-50%,120px);
+  z-index:100;
+  padding:13px 17px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:13px;
+  box-shadow:var(--shadow);
+  opacity:0;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+  opacity:1;
+}
+
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:70;
+  background:rgba(0,0,0,.65);
+  padding:20px;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-backdrop.open{display:flex}
+
+.modal{
+  width:min(100%,600px);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+}
+
+.photo-preview{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--border);
+}
+
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:9px;
+}
+
+.color{
+  height:40px;
+  border-radius:12px;
+  border:2px solid transparent;
+}
+
+.color.selected{
+  border-color:var(--text);
+  box-shadow:0 0 0 2px var(--accent);
+}
+
+.notice{
+  padding:13px 15px;
+  border-radius:13px;
+  background:color-mix(in srgb,var(--accent) 9%,var(--surface2));
+  border:1px solid color-mix(in srgb,var(--accent) 25%,var(--border));
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.copy-box{
+  position:relative;
+}
+
+.copy-box textarea{
+  min-height:220px;
+}
+
+.star{
+  border:0;
+  background:none;
+  font-size:23px;
+  color:var(--muted);
+}
+
+.star.active{color:#fbbf24}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.hidden{display:none!important}
+
+hr{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:20px 0;
+}
+</style>
+</head>
+
+<body>
+<div id="app" class="app">
+
+<header class="topbar hidden" id="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+  <div class="brand">MINDSET</div>
+  <div style="width:42px"></div>
+</header>
+
+<main>
+
+<!-- ONBOARDING -->
+<section id="onboarding" class="screen">
+  <div class="hero">
+    <div class="logo">M</div>
+    <div class="eyebrow">MINDSET</div>
+    <h1>Crie sites profissionais para seus clientes.</h1>
+    <p class="subtitle">
+      Organize seus projetos, encontre empresas, crie prompts profissionais,
+      prospecte clientes e acompanhe seus resultados em um só lugar.
+    </p>
+
+    <div class="card">
+      <h3>Crie seu perfil real aqui.</h3>
+      <p class="muted">
+        O MINDSET usa seus próprios dados para calcular suas metas e resultados.
+      </p>
+      <button class="btn btn-primary" id="startBtn">Começar →</button>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE SETUP -->
+<section id="profileSetup" class="screen">
+  <button class="back" data-back="onboarding">← Voltar</button>
+  <h1>Seu perfil</h1>
+  <p class="muted">Configure seus dados para começar.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="profileName">Seu nome</label>
+      <input id="profileName" placeholder="Ex.: João">
+    </div>
+
+    <div class="field">
+      <label for="weeklyGoal">Sua meta semanal em R$</label>
+      <input id="weeklyGoal" type="number" min="0" step="0.01" placeholder="Ex.: 1500">
+    </div>
+
+    <div class="field">
+      <label for="sitePrice">Preço por site em R$</label>
+      <input id="sitePrice" type="number" min="0" step="0.01" placeholder="Ex.: 500">
+    </div>
+
+    <div class="field">
+      <label for="sitesDay">Sites por dia</label>
+      <input id="sitesDay" type="number" min="1" step="1" placeholder="Ex.: 1">
+    </div>
+
+    <div class="field">
+      <label for="profilePhoto">Foto de perfil (opcional)</label>
+      <input id="profilePhoto" type="file" accept="image/*">
+    </div>
+
+    <button class="btn btn-primary" id="saveProfileBtn">Salvar e entrar →</button>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen">
+  <div class="eyebrow">PAINEL</div>
+  <h1 id="helloTitle">Olá.</h1>
+  <p class="muted">Seu acompanhamento real.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="small-text">Dinheiro registrado</span>
+      <div class="stat-value" id="statMoney">R$ 0</div>
+    </div>
+
+    <div class="stat">
+      <span class="small-text">Projetos</span>
+      <div class="stat-value" id="statProjects">0</div>
+    </div>
+
+    <div class="stat">
+      <span class="small-text">Clientes</span>
+      <div class="stat-value" id="statClients">0</div>
+    </div>
+
+    <div class="stat">
+      <span class="small-text">Meta diária</span>
+      <div class="stat-value" id="statDailyGoal">R$ 0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="list-item-header">
+      <strong>Progresso da meta semanal</strong>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress" style="margin-top:12px">
+      <div id="weeklyProgress" style="width:0%"></div>
+    </div>
+    <p class="small-text" style="margin:10px 0 0" id="progressText">
+      R$ 0 de R$ 0
+    </p>
+  </div>
+
+  <div class="grid grid-2">
+    <button class="btn btn-primary" id="newSiteBtn">Criar novo site →</button>
+    <button class="btn btn-secondary" id="prospectBtn">Prospectar →</button>
+  </div>
+</section>
+
+<!-- BUILDER -->
+<section id="builder" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+
+  <div id="builderContent"></div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ORGANIZAÇÃO</div>
+  <h1>Projetos</h1>
+  <p class="muted">Somente projetos realmente criados por você.</p>
+  <div id="projectsList" class="list"></div>
+</section>
+
+<!-- FAVORITES -->
+<section id="favorites" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ORGANIZAÇÃO</div>
+  <h1>Favoritos</h1>
+  <div id="favoritesList" class="list"></div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ORGANIZAÇÃO</div>
+  <h1>Clientes</h1>
+  <div id="clientsList" class="list"></div>
+</section>
+
+<!-- PROSPECTING -->
+<section id="prospecting" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">PROSPECÇÃO</div>
+  <h1>Prospectar</h1>
+  <p class="muted">Registre o contato e escolha a mensagem que deseja enviar.</p>
+
+  <div class="card">
+    <div class="field">
+      <label>Empresa</label>
+      <input id="prospectCompany" placeholder="Nome da empresa">
+    </div>
+
+    <div class="field">
+      <label>Responsável</label>
+      <input id="prospectResponsible" placeholder="Nome do responsável">
+    </div>
+
+    <div class="field">
+      <label>WhatsApp</label>
+      <input id="prospectPhone" inputmode="tel" placeholder="DDD + número">
+    </div>
+
+    <div class="field">
+      <label>Mensagem</label>
+      <div class="option-grid">
+        <button class="option selected" data-message-type="direct">
+          <strong>Direta e profissional</strong>
+          <span class="small-text">Mensagem objetiva.</span>
+        </button>
+        <button class="option" data-message-type="natural">
+          <strong>Natural</strong>
+          <span class="small-text">Mensagem mais conversada.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="copy-box">
+      <textarea id="prospectMessage" readonly></textarea>
+    </div>
+
+    <div class="actions" style="margin-top:12px">
+      <button class="btn btn-secondary" id="copyProspectBtn">Copiar</button>
+      <button class="btn btn-success" id="sendProspectBtn">Enviar pelo WhatsApp →</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ACOMPANHAMENTO</div>
+  <h1>Resultados</h1>
+  <div id="resultsContent"></div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ACOMPANHAMENTO</div>
+  <h1>Histórico</h1>
+  <div id="historyList" class="list"></div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activity" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">ACOMPANHAMENTO</div>
+  <h1>Central de atividade</h1>
+  <div id="activityList" class="list"></div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">PERFIL</div>
+  <h1>Meu perfil</h1>
+  <div id="profileContent"></div>
+</section>
+
+<!-- EDIT PROFILE -->
+<section id="editProfile" class="screen">
+  <button class="back" data-back="profile">← Voltar</button>
+  <div class="eyebrow">PERFIL</div>
+  <h1>Editar perfil</h1>
+
+  <div class="card">
+    <div class="field">
+      <label>Nome</label>
+      <input id="editName">
+    </div>
+    <div class="field">
+      <label>Meta semanal</label>
+      <input id="editWeeklyGoal" type="number" min="0" step=".01">
+    </div>
+    <div class="field">
+      <label>Preço por site</label>
+      <input id="editSitePrice" type="number" min="0" step=".01">
+    </div>
+    <div class="field">
+      <label>Sites por dia</label>
+      <input id="editSitesDay" type="number" min="1">
+    </div>
+    <button class="btn btn-primary" id="updateProfileBtn">Salvar alterações</button>
+  </div>
+</section>
+
+<!-- APPEARANCE -->
+<section id="appearance" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">PERSONALIZAÇÃO</div>
+  <h1>Aparência</h1>
+
+  <div class="card">
+    <h3>Cor principal</h3>
+    <div id="colorGrid" class="color-grid"></div>
+
+    <hr>
+
+    <div class="field">
+      <label>Tema</label>
+      <select id="themeSelect">
+        <option value="dark">Escuro</option>
+        <option value="light">Claro</option>
+        <option value="auto">Automático</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Tamanho da interface</label>
+      <select id="sizeSelect">
+        <option value="small">Pequeno</option>
+        <option value="normal">Normal</option>
+        <option value="large">Grande</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Densidade</label>
+      <select id="densitySelect">
+        <option value="compact">Compacta</option>
+        <option value="normal">Normal</option>
+        <option value="spaced">Espaçada</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Cantos</label>
+      <select id="cornersSelect">
+        <option value="square">Quadrados</option>
+        <option value="soft">Suaves</option>
+        <option value="rounded">Arredondados</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Efeito visual</label>
+      <select id="effectSelect">
+        <option value="solid">Sólido</option>
+        <option value="glass">Glass sutil</option>
+        <option value="glow">Glow sutil</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Animações</label>
+      <select id="animationSelect">
+        <option value="off">Desligadas</option>
+        <option value="soft">Suaves</option>
+        <option value="full">Completas</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- PREFERENCES -->
+<section id="preferences" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">PERSONALIZAÇÃO</div>
+  <h1>Preferências</h1>
+
+  <div class="card">
+    <label style="display:flex;align-items:center;justify-content:space-between">
+      <span>
+        <strong style="display:block;color:var(--text)">Confirmar antes de excluir</strong>
+        <small>Evita exclusões acidentais.</small>
+      </span>
+      <input id="confirmDelete" type="checkbox" style="width:22px;height:22px">
+    </label>
+
+    <hr>
+
+    <label style="display:flex;align-items:center;justify-content:space-between">
+      <span>
+        <strong style="display:block;color:var(--text)">Salvamento automático</strong>
+        <small>Salva alterações automaticamente.</small>
+      </span>
+      <input id="autosave" type="checkbox" style="width:22px;height:22px">
+    </label>
+  </div>
+</section>
+
+<!-- PROMPT LIBRARY -->
+<section id="promptLibrary" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">RECURSOS</div>
+  <h1>Biblioteca de prompts</h1>
+  <div id="promptList" class="list"></div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">RECURSOS</div>
+  <h1>Modelos de sites</h1>
+
+  <div class="list">
+    <button class="option" data-template="Landing page de serviço">
+      <strong>Landing page de serviço</strong>
+      <span class="small-text">Começar criação com esse modelo.</span>
+    </button>
+
+    <button class="option" data-template="Site institucional">
+      <strong>Site institucional</strong>
+      <span class="small-text">Começar criação com esse modelo.</span>
+    </button>
+
+    <button class="option" data-template="Página de apresentação">
+      <strong>Página de apresentação</strong>
+      <span class="small-text">Começar criação com esse modelo.</span>
+    </button>
+  </div>
+</section>
+
+<!-- SELLING TIPS -->
+<section id="sellingTips" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">RECURSOS</div>
+  <h1>Dicas para vender</h1>
+
+  <div class="list">
+    <div class="list-item">
+      <strong>1. Mostre o problema</strong>
+      <p class="muted">Apresente de forma objetiva o que pode ser melhorado na presença digital da empresa.</p>
+    </div>
+    <div class="list-item">
+      <strong>2. Mostre uma solução</strong>
+      <p class="muted">Explique como um site pode organizar informações, serviços e formas de contato.</p>
+    </div>
+    <div class="list-item">
+      <strong>3. Seja específico</strong>
+      <p class="muted">Evite promessas que você não consegue comprovar.</p>
+    </div>
+    <div class="list-item">
+      <strong>4. Facilite o próximo passo</strong>
+      <p class="muted">Termine sua conversa com uma ação clara.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">SUPORTE</div>
+  <h1>Como funciona</h1>
+
+  <div class="list">
+    <div class="list-item"><strong>1. Configure seu perfil</strong><p class="muted">Informe seus objetivos e preço.</p></div>
+    <div class="list-item"><strong>2. Crie um projeto</strong><p class="muted">Informe nicho, localização, empresa e preferências visuais.</p></div>
+    <div class="list-item"><strong>3. Gere o prompt</strong><p class="muted">O MINDSET organiza somente as informações fornecidas.</p></div>
+    <div class="list-item"><strong>4. Prospecte</strong><p class="muted">Registre o contato e envie uma mensagem pelo WhatsApp.</p></div>
+    <div class="list-item"><strong>5. Acompanhe</strong><p class="muted">Projetos, clientes, atividades e resultados ficam registrados.</p></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="screen">
+  <button class="back" data-back="dashboard">← Voltar</button>
+  <div class="eyebrow">SUPORTE</div>
+  <h1>Sobre o MINDSET</h1>
+
+  <div class="card">
+    <h3>MINDSET</h3>
+    <p class="muted">
+      Uma ferramenta local para organizar criação de sites,
+      prospecção e acompanhamento.
+    </p>
+    <p class="small-text">Seus dados são armazenados localmente neste dispositivo.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <strong class="brand">MINDSET</strong>
+    <button class="icon-btn" id="closeDrawer">×</button>
+  </div>
+
+  <div class="menu-section">Perfil</div>
+  <button class="menu-item" data-screen="profile">Meu perfil</button>
+  <button class="menu-item" data-screen="editProfile">Editar perfil</button>
+
+  <div class="menu-section">Acompanhamento</div>
+  <button class="menu-item" data-screen="results">Resultados</button>
+  <button class="menu-item" data-screen="history">Histórico</button>
+  <button class="menu-item" data-screen="activity">Central de atividade</button>
+
+  <div class="menu-section">Organização</div>
+  <button class="menu-item" data-screen="projects">Projetos</button>
+  <button class="menu-item" data-screen="clients">Clientes</button>
+  <button class="menu-item" data-screen="favorites">Favoritos</button>
+
+  <div class="menu-section">Personalização</div>
+  <button class="menu-item" data-screen="appearance">Aparência</button>
+  <button class="menu-item" data-screen="preferences">Preferências</button>
+
+  <div class="menu-section">Recursos</div>
+  <button class="menu-item" data-screen="promptLibrary">Biblioteca de prompts</button>
+  <button class="menu-item" data-screen="templates">Modelos de sites</button>
+  <button class="menu-item" data-screen="sellingTips">Dicas para vender</button>
+
+  <div class="menu-section">Suporte</div>
+  <button class="menu-item" data-screen="how">Como funciona</button>
+  <button class="menu-item" id="supportBtn">Entrar em contato comigo</button>
+  <button class="menu-item" data-screen="about">Sobre o MINDSET</button>
+</aside>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   MINDSET
+   Aplicação SPA + localStorage + PWA
+========================================================= */
+
+const STORAGE_KEY = "mindset_app";
+
+const DEFAULT_STATE = {
+  profile:{
+    name:"",
+    weeklyGoal:0,
+    sitePrice:0,
+    sitesDay:1,
+    photo:""
+  },
+
+  projects:[],
+  clients:[],
+  history:[],
+  activity:[],
+  favorites:[],
+
+  settings:{
+    accent:"#7c3aed",
+    theme:"dark",
+    size:"normal",
+    density:"normal",
+    corners:"soft",
+    effect:"solid",
+    animations:"soft",
+    confirmDelete:true,
+    autosave:true
+  },
+
+  onboardingComplete:false
+};
+
+let state = loadState();
+
+let builder = {
+  step:0,
+  template:"",
+  niche:"",
+  location:"",
+  company:"",
+  choices:{
+    style:"",
+    tones:"",
+    color:"",
+    typography:"",
+    images:"",
+    structure:"",
+    animations:"",
+    feeling:""
+  }
+};
+
+let prospectMessageType = "direct";
+
+const COLORS = [
+  ["#7c3aed","Roxo"],
+  ["#4f46e5","Índigo"],
+  ["#2563eb","Azul"],
+  ["#06b6d4","Ciano"],
+  ["#14b8a6","Turquesa"],
+  ["#22c55e","Verde"],
+  ["#10b981","Esmeralda"],
+  ["#eab308","Amarelo"],
+  ["#f97316","Laranja"],
+  ["#c2410c","Terracota"],
+  ["#ef4444","Vermelho"],
+  ["#ec4899","Rosa"],
+  ["#d946ef","Magenta"],
+  ["#d4a017","Dourado"],
+  ["#64748b","Ardósia"]
+];
+
+const BUILDER_STEPS = [
+  {
+    key:"style",
+    title:"Estilo visual",
+    subtitle:"Escolha um estilo para o projeto.",
+    options:[
+      ["Minimalista","Visual limpo, organizado e com poucos elementos decorativos."],
+      ["Moderno","Visual contemporâneo com composição marcante."],
+      ["Elegante","Visual sofisticado e equilibrado."],
+      ["Impactante","Visual forte, com maior destaque visual."]
+    ]
+  },
+  {
+    key:"tones",
+    title:"Tons",
+    subtitle:"Escolha a direção dos tons.",
+    options:[
+      ["Claros","Predominância de tons claros."],
+      ["Escuros","Predominância de tons escuros."],
+      ["Neutros","Paleta equilibrada e discreta."],
+      ["Contraste","Diferenças marcantes entre elementos."]
+    ]
+  },
+  {
+    key:"color",
+    title:"Cor principal",
+    subtitle:"Escolha uma cor.",
+    options:COLORS.map(c=>[c[1],c[0]])
+  },
+  {
+    key:"typography",
+    title:"Tipografia",
+    subtitle:"Escolha a personalidade tipográfica.",
+    options:[
+      ["Sans-serif moderna","Tipografia limpa e contemporânea."],
+      ["Elegante","Tipografia com aparência refinada."],
+      ["Geométrica","Tipografia com formas geométricas."],
+      ["Editorial","Tipografia com personalidade editorial."]
+    ]
+  },
+  {
+    key:"images",
+    title:"Imagens",
+    subtitle:"Defina como as imagens devem aparecer.",
+    options:[
+      ["Fotográficas","Uso predominante de imagens fotográficas."],
+      ["Ilustrações","Uso predominante de ilustrações."],
+      ["Minimalistas","Uso controlado de imagens."],
+      ["Destaque visual","Imagens com maior presença."]
+    ]
+  },
+  {
+    key:"structure",
+    title:"Estrutura",
+    subtitle:"Escolha a organização geral.",
+    options:[
+      ["Conversão","Estrutura orientada à ação."],
+      ["Institucional","Estrutura orientada à apresentação da empresa."],
+      ["Serviços","Estrutura com destaque para serviços."],
+      ["Apresentação","Estrutura focada na apresentação."]
+    ]
+  },
+  {
+    key:"animations",
+    title:"Animações",
+    subtitle:"Escolha o nível de movimento.",
+    options:[
+      ["Nenhuma","Sem animações."],
+      ["Sutis","Movimentos discretos."],
+      ["Modernas","Transições e interações modernas."],
+      ["Dinâmicas","Maior presença de animações."]
+    ]
+  },
+  {
+    key:"feeling",
+    title:"Sensação",
+    subtitle:"Escolha a sensação que o site deve transmitir.",
+    options:[
+      ["Confiança","Sensação de segurança e profissionalismo."],
+      ["Proximidade","Sensação humana e acolhedora."],
+      ["Autoridade","Sensação de domínio e credibilidade."],
+      ["Energia","Sensação dinâmica e ativa."]
+    ]
+  }
+];
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function deepClone(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return deepClone(DEFAULT_STATE);
+
+    const saved = JSON.parse(raw);
+
+    return {
+      ...deepClone(DEFAULT_STATE),
+      ...saved,
+      profile:{
+        ...deepClone(DEFAULT_STATE.profile),
+        ...(saved.profile || {})
+      },
+      settings:{
+        ...deepClone(DEFAULT_STATE.settings),
+        ...(saved.settings || {})
+      },
+      projects:Array.isArray(saved.projects)?saved.projects:[],
+      clients:Array.isArray(saved.clients)?saved.clients:[],
+      history:Array.isArray(saved.history)?saved.history:[],
+      activity:Array.isArray(saved.activity)?saved.activity:[],
+      favorites:Array.isArray(saved.favorites)?saved.favorites:[]
+    };
+  }catch(e){
+    return deepClone(DEFAULT_STATE);
+  }
+}
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function uid(prefix="id"){
+  return prefix+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
+}
+
+function money(value){
+  return new Intl.NumberFormat("pt-BR",{
+    style:"currency",
+    currency:"BRL"
+  }).format(Number(value)||0);
+}
+
+function dateTime(date=Date.now()){
+  return new Intl.DateTimeFormat("pt-BR",{
+    dateStyle:"short",
+    timeStyle:"short"
+  }).format(new Date(date));
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function toast(message){
+  const el=$("toast");
+  el.textContent=message;
+  el.classList.add("show");
+
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>{
+    el.classList.remove("show");
+  },2500);
+}
+
+function logAction(type,text,extra={}){
+  const item={
+    id:uid("activity"),
+    type,
+    text,
+    date:Date.now(),
+    ...extra
+  };
+
+  state.activity.unshift(item);
+
+  state.history.unshift({
+    id:uid("history"),
+    type,
+    text,
+    date:item.date
+  });
+
+  saveState();
+}
+
+function openExternal(url){
+  window.open(url,"_blank","noopener,noreferrer");
+}
+
+function confirmDelete(message){
+  if(!state.settings.confirmDelete) return true;
+  return window.confirm(message);
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.classList.toggle("active",s.id===id);
+  });
+
+  if(id==="dashboard") renderDashboard();
+  if(id==="projects") renderProjects();
+  if(id==="favorites") renderFavorites();
+  if(id==="clients") renderClients();
+  if(id==="results") renderResults();
+  if(id==="history") renderHistory();
+  if(id==="activity") renderActivity();
+  if(id==="profile") renderProfile();
+  if(id==="editProfile") fillEditProfile();
+  if(id==="appearance") renderAppearance();
+  if(id==="preferences") renderPreferences();
+  if(id==="promptLibrary") renderPromptLibrary();
+  if(id==="prospecting") renderProspecting();
+
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function startApp(){
+  if(!state.onboardingComplete){
+    $("topbar").classList.add("hidden");
+    showScreen("onboarding");
+  }else{
+    $("topbar").classList.remove("hidden");
+    showScreen("dashboard");
+  }
+}
+
+function openDrawer(){
+  $("drawer").classList.add("open");
+  $("drawerBackdrop").classList.add("open");
+}
+
+function closeDrawer(){
+  $("drawer").classList.remove("open");
+  $("drawerBackdrop").classList.remove("open");
+}
+
+/* =========================================================
+   APPEARANCE
+========================================================= */
+
+function applyAppearance(){
+  const s=state.settings;
+
+  document.documentElement.style.setProperty("--accent",s.accent);
+
+  const accent2 = lightenColor(s.accent);
+  document.documentElement.style.setProperty("--accent2",accent2);
+
+  document.body.classList.remove(
+    "light","small","large",
+    "compact","spaced",
+    "square","soft","rounded",
+    "glass","glow",
+    "anim-off","anim-soft","anim-full"
+  );
+
+  let theme=s.theme;
+
+  if(theme==="auto"){
+    theme=window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme:light)").matches
+      ? "light":"dark";
+  }
+
+  if(theme==="light") document.body.classList.add("light");
+
+  if(s.size!=="normal") document.body.classList.add(s.size);
+
+  if(s.density!=="normal") document.body.classList.add(s.density);
+
+  if(s.corners==="square") document.body.classList.add("square");
+  if(s.corners==="soft") document.body.classList.add("soft");
+  if(s.corners==="rounded") document.body.classList.add("rounded");
+
+  if(s.effect==="glass") document.body.classList.add("glass");
+  if(s.effect==="glow") document.body.classList.add("glow");
+
+  document.body.classList.add(
+    s.animations==="off" ? "anim-off" :
+    s.animations==="full" ? "anim-full" :
+    "anim-soft"
+  );
+
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.content=s.accent;
+}
+
+function lightenColor(hex){
+  const n=parseInt(hex.replace("#",""),16);
+  const r=Math.min(255,(n>>16)+45);
+  const g=Math.min(255,((n>>8)&255)+45);
+  const b=Math.min(255,(n&255)+45);
+
+  return "#"+
+    [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
+}
+
+function renderAppearance(){
+  const grid=$("colorGrid");
+
+  grid.innerHTML=COLORS.map(([color,name])=>`
+    <button
+      class="color ${state.settings.accent===color?"selected":""}"
+      style="background:${color}"
+      title="${name}"
+      aria-label="${name}"
+      data-color="${color}">
+    </button>
+  `).join("");
+
+  $("themeSelect").value=state.settings.theme;
+  $("sizeSelect").value=state.settings.size;
+  $("densitySelect").value=state.settings.density;
+  $("cornersSelect").value=state.settings.corners;
+  $("effectSelect").value=state.settings.effect;
+  $("animationSelect").value=state.settings.animations;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+  const p=state.profile;
+
+  $("helloTitle").textContent=p.name
+    ? `Olá, ${p.name}.`
+    : "Olá.";
+
+  const moneyTotal=state.projects.reduce(
+    (sum,project)=>sum+(Number(project.price)||0),0
+  );
+
+  const goal=Number(p.weeklyGoal)||0;
+  const percent=goal>0
+    ? Math.min(100,(moneyTotal/goal)*100)
+    : 0;
+
+  $("statMoney").textContent=money(moneyTotal);
+  $("statProjects").textContent=state.projects.length;
+  $("statClients").textContent=state.clients.length;
+  $("statDailyGoal").textContent=money(
+    (Number(p.sitePrice)||0)*(Number(p.sitesDay)||0)
+  );
+
+  $("weeklyProgress").style.width=percent+"%";
+  $("progressPercent").textContent=Math.round(percent)+"%";
+  $("progressText").textContent=
+    `${money(moneyTotal)} de ${money(goal)}`;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+$("startBtn").addEventListener("click",()=>{
+  showScreen("profileSetup");
+});
+
+$("saveProfileBtn").addEventListener("click",async()=>{
+  const name=$("profileName").value.trim();
+  const weekly=Number($("weeklyGoal").value);
+  const price=Number($("sitePrice").value);
+  const sites=Number($("sitesDay").value);
+
+  if(!name){
+    toast("Digite seu nome.");
+    $("profileName").focus();
+    return;
+  }
+
+  if(!Number.isFinite(weekly)||weekly<0){
+    toast("Digite uma meta semanal válida.");
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<0){
+    toast("Digite um preço válido.");
+    return;
+  }
+
+  if(!Number.isFinite(sites)||sites<1){
+    toast("Informe quantos sites você pretende fazer por dia.");
+    return;
+  }
+
+  let photo="";
+
+  const file=$("profilePhoto").files[0];
+
+  if(file){
+    photo=await readFileAsDataURL(file);
+  }
+
+  state.profile={
+    name,
+    weeklyGoal:weekly,
+    sitePrice:price,
+    sitesDay:sites,
+    photo
+  };
+
+  state.onboardingComplete=true;
+
+  saveState();
+
+  logAction("profile","Perfil criado.");
+
+  $("topbar").classList.remove("hidden");
+  showScreen("dashboard");
+  toast("Perfil criado.");
+});
+
+function readFileAsDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderProfile(){
+  const p=state.profile;
+
+  $("profileContent").innerHTML=`
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:15px">
+        ${
+          p.photo
+          ? `<img class="photo-preview" src="${p.photo}" alt="Foto de perfil">`
+          : `<div class="logo" style="width:72px;height:72px;margin:0">${escapeHtml((p.name||"M").charAt(0).toUpperCase())}</div>`
+        }
+
+        <div>
+          <h3 style="margin-bottom:4px">${escapeHtml(p.name||"Sem nome")}</h3>
+          <span class="muted">Perfil MINDSET</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="list">
+        <div class="list-item">
+          <span class="small-text">Meta semanal</span>
+          <strong>${money(p.weeklyGoal)}</strong>
+        </div>
+
+        <div class="list-item">
+          <span class="small-text">Preço por site</span>
+          <strong>${money(p.sitePrice)}</strong>
+        </div>
+
+        <div class="list-item">
+          <span class="small-text">Sites por dia</span>
+          <strong>${p.sitesDay}</strong>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function fillEditProfile(){
+  const p=state.profile;
+
+  $("editName").value=p.name;
+  $("editWeeklyGoal").value=p.weeklyGoal;
+  $("editSitePrice").value=p.sitePrice;
+  $("editSitesDay").value=p.sitesDay;
+}
+
+$("updateProfileBtn").addEventListener("click",()=>{
+  const name=$("editName").value.trim();
+  const weekly=Number($("editWeeklyGoal").value);
+  const price=Number($("editSitePrice").value);
+  const sites=Number($("editSitesDay").value);
+
+  if(!name){
+    toast("Digite seu nome.");
+    return;
+  }
+
+  if(!Number.isFinite(weekly)||weekly<0||
+     !Number.isFinite(price)||price<0||
+     !Number.isFinite(sites)||sites<1){
+    toast("Confira os valores.");
+    return;
+  }
+
+  state.profile.name=name;
+  state.profile.weeklyGoal=weekly;
+  state.profile.sitePrice=price;
+  state.profile.sitesDay=sites;
+
+  saveState();
+  logAction("profile","Perfil atualizado.");
+
+  showScreen("profile");
+  toast("Perfil atualizado.");
+});
+
+/* =========================================================
+   BUILDER
+========================================================= */
+
+function startBuilder(template=""){
+  builder={
+    step:0,
+    template,
+    niche:"",
+    location:"",
+    company:"",
+    choices:{
+      style:"",
+      tones:"",
+      color:"",
+      typography:"",
+      images:"",
+      structure:"",
+      animations:"",
+      feeling:""
+    }
+  };
+
+  renderBuilder();
+  showScreen("builder");
+}
+
+function renderBuilder(){
+  const c=$("builderContent");
+
+  if(builder.step===0){
+    c.innerHTML=`
+      <div class="eyebrow">NOVO SITE</div>
+      <h1>Encontre uma empresa</h1>
+      <p class="muted">Comece informando o nicho e a localização.</p>
+
+      <div class="card">
+        <div class="field">
+          <label>Nicho</label>
+          <input id="builderNiche" value="${escapeHtml(builder.niche)}"
+            placeholder="Ex.: restaurante, dentista, advogado">
+        </div>
+
+        <div class="field">
+          <label>Localização</label>
+          <input id="builderLocation" value="${escapeHtml(builder.location)}"
+            placeholder="Ex.: Porto Alegre, RS">
+        </div>
+
+        ${
+          builder.template
+          ? `<div class="notice" style="margin-bottom:15px">
+              Modelo selecionado: <strong>${escapeHtml(builder.template)}</strong>
+            </div>`
+          :""
+        }
+
+        <button class="btn btn-primary" id="mapsBtn">
+          Abrir no Google Maps →
+        </button>
+      </div>
+    `;
+
+    $("mapsBtn").addEventListener("click",()=>{
+      const niche=$("builderNiche").value.trim();
+      const location=$("builderLocation").value.trim();
+
+      if(!niche||!location){
+        toast("Preencha nicho e localização.");
+        return;
+      }
+
+      builder.niche=niche;
+      builder.location=location;
+
+      saveBuilderIfNeeded();
+
+      const query=encodeURIComponent(`${niche} em ${location}`);
+
+      openExternal(
+        "https://www.google.com/maps/search/"+query
+      );
+
+      builder.step=1;
+      renderBuilder();
+    });
+
+    return;
+  }
+
+  if(builder.step===1){
+    c.innerHTML=`
+      <button class="back" id="builderBack">← Voltar</button>
+
+      <div class="eyebrow">NOVO SITE</div>
+      <h1>Qual é a empresa?</h1>
+      <p class="muted">
+        Informe o nome exato da empresa encontrada.
+      </p>
+
+      <div class="card">
+        <div class="field">
+          <label>Nome da empresa</label>
+          <input id="builderCompany"
+            value="${escapeHtml(builder.company)}"
+            placeholder="Nome real da empresa">
+        </div>
+
+        <button class="btn btn-primary" id="companyNext">
+          Continuar →
+        </button>
+      </div>
+    `;
+
+    $("builderBack").addEventListener("click",()=>{
+      builder.step=0;
+      renderBuilder();
+    });
+
+    $("companyNext").addEventListener("click",()=>{
+      const company=$("builderCompany").value.trim();
+
+      if(!company){
+        toast("Informe o nome da empresa.");
+        return;
+      }
+
+      builder.company=company;
+      builder.step=2;
+      renderBuilder();
+    });
+
+    return;
+  }
+
+  const visualIndex=builder.step-2;
+
+  if(visualIndex<BUILDER_STEPS.length){
+    const current=BUILDER_STEPS[visualIndex];
+
+    c.innerHTML=`
+      <button class="back" id="visualBack">← Voltar</button>
+
+      <div class="eyebrow">
+        ETAPA ${visualIndex+1} DE ${BUILDER_STEPS.length}
+      </div>
+
+      <h1>${current.title}</h1>
+      <p class="muted">${current.subtitle}</p>
+
+      <div class="progress" style="margin-bottom:20px">
+        <div style="width:${((visualIndex+1)/BUILDER_STEPS.length)*100}%"></div>
+      </div>
+
+      <div class="option-grid">
+        ${current.options.map(([name,description])=>`
+          <button
+            class="option ${builder.choices[current.key]===name?"selected":""}"
+            data-choice="${escapeHtml(name)}">
+            <strong>${escapeHtml(name)}</strong>
+            <span class="small-text">${escapeHtml(description||"")}</span>
+          </button>
+        `).join("")}
+      </div>
+    `;
+
+    $("visualBack").addEventListener("click",()=>{
+      builder.step--;
+      renderBuilder();
+    });
+
+    c.querySelectorAll("[data-choice]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        builder.choices[current.key]=btn.dataset.choice;
+        builder.step++;
+        renderBuilder();
+      });
+    });
+
+    return;
+  }
+
+  renderPromptPreview();
+}
+
+function saveBuilderIfNeeded(){
+  if(state.settings.autosave){
+    localStorage.setItem(
+      "mindset_builder_temp",
+      JSON.stringify(builder)
+    );
+  }
+}
+
+function renderPromptPreview(){
+  const prompt=generatePrompt();
+
+  $("builderContent").innerHTML=`
+    <button class="back" id="promptBack">← Voltar</button>
+
+    <div class="eyebrow">RESULTADO</div>
+    <h1>Prompt pronto</h1>
+    <p class="muted">
+      O prompt abaixo usa somente as informações fornecidas.
+    </p>
+
+    <div class="card">
+      <div class="copy-box">
+        <textarea id="generatedPrompt">${escapeHtml(prompt)}</textarea>
+      </div>
+
+      <div class="actions" style="margin-top:12px">
+        <button class="btn btn-secondary" id="copyPromptBtn">Copiar prompt</button>
+        <button class="btn btn-primary" id="saveProjectBtn">Salvar projeto</button>
+      </div>
+    </div>
+  `;
+
+  $("promptBack").addEventListener("click",()=>{
+    builder.step--;
+    renderBuilder();
+  });
+
+  $("copyPromptBtn").addEventListener("click",async()=>{
+    await copyText(prompt);
+    toast("Prompt copiado.");
+  });
+
+  $("saveProjectBtn").addEventListener("click",()=>{
+    saveProject(prompt);
+  });
+}
+
+function generatePrompt(){
+  const c=builder.choices;
+
+  return `Crie um site profissional para a empresa "${builder.company}".
+
+INFORMAÇÕES FORNECIDAS
+Empresa: ${builder.company}
+Nicho: ${builder.niche}
+Localização: ${builder.location}
+Modelo: ${builder.template || "Não informado"}
+
+DIREÇÃO VISUAL
+Estilo: ${c.style || "Não informado"}
+Tons: ${c.tones || "Não informado"}
+Cor principal: ${c.color || "Não informado"}
+Tipografia: ${c.typography || "Não informado"}
+Imagens: ${c.images || "Não informado"}
+Estrutura: ${c.structure || "Não informado"}
+Animações: ${c.animations || "Não informado"}
+Sensação: ${c.feeling || "Não informado"}
+
+REQUISITOS
+- Criar uma interface profissional e responsiva.
+- Priorizar boa experiência em celular.
+- Organizar o conteúdo de forma clara.
+- Destacar as informações fornecidas sobre a empresa.
+- Não inventar informações sobre a empresa.
+- Não inventar endereço, telefone, avaliações, preços, serviços, horários ou outros dados que não foram fornecidos.
+- Quando uma informação necessária não estiver disponível, usar um placeholder claramente identificado.
+- Manter coerência visual entre cores, tipografia, imagens, estrutura e animações.
+- Criar navegação clara e acessível.
+
+DADOS NÃO FORNECIDOS
+Qualquer informação não presente acima deve permanecer como placeholder e deverá ser preenchida posteriormente com dados reais do cliente.`;
+}
+
+function saveProject(prompt){
+  const project={
+    id:uid("project"),
+    company:builder.company,
+    niche:builder.niche,
+    location:builder.location,
+    price:Number(state.profile.sitePrice)||0,
+    date:Date.now(),
+    prompt,
+    favorite:false,
+    template:builder.template || ""
+  };
+
+  state.projects.unshift(project);
+
+  saveState();
+
+  logAction(
+    "project",
+    `Projeto criado: ${builder.company}.`,
+    {projectId:project.id}
+  );
+
+  builder={
+    step:0,
+    template:"",
+    niche:"",
+    location:"",
+    company:"",
+    choices:{
+      style:"",
+      tones:"",
+      color:"",
+      typography:"",
+      images:"",
+      structure:"",
+      animations:"",
+      feeling:""
+    }
+  };
+
+  localStorage.removeItem("mindset_builder_temp");
+
+  showScreen("dashboard");
+  toast("Projeto salvo com sucesso.");
+}
+
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+function projectCard(project){
+  const fav=project.favorite;
+
+  return `
+    <div class="list-item">
+      <div class="list-item-header">
+        <div>
+          <strong>${escapeHtml(project.company)}</strong>
+          <div class="small-text">
+            ${escapeHtml(project.niche)} · ${escapeHtml(project.location)}
+          </div>
+        </div>
+
+        <button class="star ${fav?"active":""}" data-fav="${project.id}">
+          ${fav?"★":"☆"}
+        </button>
+      </div>
+
+      <div class="small-text" style="margin:10px 0">
+        ${dateTime(project.date)} · ${money(project.price)}
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" data-open-project="${project.id}">
+          Abrir prompt
+        </button>
+
+        <button class="btn btn-danger" data-delete-project="${project.id}">
+          Excluir
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderProjects(){
+  const el=$("projectsList");
+
+  if(!state.projects.length){
+    el.innerHTML=`
+      <div class="empty">
+        <p>Nenhum projeto criado ainda.</p>
+        <button class="btn btn-primary" id="emptyCreateBtn">
+          Criar primeiro projeto
+        </button>
+      </div>
+    `;
+
+    $("emptyCreateBtn").addEventListener("click",()=>{
+      startBuilder();
+    });
+
+    return;
+  }
+
+  el.innerHTML=state.projects.map(projectCard).join("");
+  bindProjectActions();
+}
+
+function bindProjectActions(){
+  document.querySelectorAll("[data-fav]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      toggleFavorite(btn.dataset.fav);
+    });
+  });
+
+  document.querySelectorAll("[data-open-project]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const project=state.projects.find(
+        p=>p.id===btn.dataset.openProject
+      );
+
+      if(project) openProjectModal(project);
+    });
+  });
+
+  document.querySelectorAll("[data-delete-project]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteProject(btn.dataset.deleteProject);
+    });
+  });
+}
+
+function openProjectModal(project){
+  $("modal").innerHTML=`
+    <div class="list-item-header">
+      <div>
+        <div class="eyebrow">PROJETO</div>
+        <h2>${escapeHtml(project.company)}</h2>
+      </div>
+      <button class="icon-btn" id="closeModalBtn">×</button>
+    </div>
+
+    <p class="small-text">
+      ${escapeHtml(project.niche)} · ${escapeHtml(project.location)}
+    </p>
+
+    <textarea id="modalPrompt">${escapeHtml(project.prompt)}</textarea>
+
+    <div class="actions" style="margin-top:12px">
+      <button class="btn btn-secondary" id="modalCopyBtn">Copiar</button>
+      <button class="btn btn-primary" id="modalCloseBtn">Fechar</button>
+    </div>
+  `;
+
+  openModal();
+
+  $("closeModalBtn").addEventListener("click",closeModal);
+  $("modalCloseBtn").addEventListener("click",closeModal);
+
+  $("modalCopyBtn").addEventListener("click",async()=>{
+    await copyText(project.prompt);
+    toast("Prompt copiado.");
+  });
+}
+
+function deleteProject(id){
+  const project=state.projects.find(p=>p.id===id);
+
+  if(!project) return;
+
+  if(!confirmDelete(`Excluir o projeto "${project.company}"?`)) return;
+
+  state.projects=state.projects.filter(p=>p.id!==id);
+  state.favorites=state.favorites.filter(x=>x!==id);
+
+  saveState();
+
+  logAction(
+    "project_deleted",
+    `Projeto excluído: ${project.company}.`
+  );
+
+  renderProjects();
+  renderDashboard();
+  toast("Projeto excluído.");
+}
+
+function toggleFavorite(id){
+  const project=state.projects.find(p=>p.id===id);
+
+  if(!project) return;
+
+  project.favorite=!project.favorite;
+
+  if(project.favorite){
+    if(!state.favorites.includes(id)){
+      state.favorites.push(id);
+    }
+    logAction("favorite",`Projeto favoritado: ${project.company}.`);
+  }else{
+    state.favorites=state.favorites.filter(x=>x!==id);
+    logAction("favorite_remove",`Projeto removido dos favoritos: ${project.company}.`);
+  }
+
+  saveState();
+
+  renderProjects();
+  renderFavorites();
+}
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+function renderFavorites(){
+  const el=$("favoritesList");
+
+  const projects=state.projects.filter(
+    p=>p.favorite || state.favorites.includes(p.id)
+  );
+
+  if(!projects.length){
+    el.innerHTML=`<div class="empty">Nenhum favorito ainda.</div>`;
+    return;
+  }
+
+  el.innerHTML=projects.map(projectCard).join("");
+  bindProjectActions();
+}
+
+/* =========================================================
+   PROSPECTING
+========================================================= */
+
+function messageFor(type){
+  const company=$("prospectCompany")?.value.trim() || "[empresa]";
+  const responsible=$("prospectResponsible")?.value.trim();
+
+  if(type==="natural"){
+    return `Olá${responsible ? " "+responsible : ""}! Tudo bem?
+
+Vi a ${company} e tive uma ideia de como vocês poderiam apresentar melhor os serviços na internet.
+
+Eu trabalho com criação de sites profissionais e posso montar uma proposta específica para a empresa.
+
+Se fizer sentido para vocês, posso te mostrar como ficaria.`;
+  }
+
+  return `Olá${responsible ? " "+responsible : ""}!
+
+Entrei em contato porque conheci a ${company} e trabalho com criação de sites profissionais.
+
+Posso desenvolver uma página pensada para apresentar a empresa e facilitar o contato com clientes.
+
+Se tiver interesse, posso te explicar rapidamente como funciona.`;
+}
+
+function renderProspecting(){
+  updateProspectMessage();
+}
+
+function updateProspectMessage(){
+  const area=$("prospectMessage");
+  if(area) area.value=messageFor(prospectMessageType);
+
+  document.querySelectorAll("[data-message-type]").forEach(btn=>{
+    btn.classList.toggle(
+      "selected",
+      btn.dataset.messageType===prospectMessageType
+    );
+  });
+}
+
+document.addEventListener("input",e=>{
+  if(
+    e.target.id==="prospectCompany" ||
+    e.target.id==="prospectResponsible"
+  ){
+    updateProspectMessage();
+  }
+});
+
+document.querySelectorAll("[data-message-type]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    prospectMessageType=btn.dataset.messageType;
+    updateProspectMessage();
+  });
+});
+
+$("copyProspectBtn").addEventListener("click",async()=>{
+  await copyText($("prospectMessage").value);
+  toast("Mensagem copiada.");
+});
+
+$("sendProspectBtn").addEventListener("click",()=>{
+  const company=$("prospectCompany").value.trim();
+  const responsible=$("prospectResponsible").value.trim();
+  const rawPhone=$("prospectPhone").value.trim();
+
+  if(!company){
+    toast("Informe a empresa.");
+    return;
+  }
+
+  if(!rawPhone){
+    toast("Informe o WhatsApp.");
+    return;
+  }
+
+  const phone=normalizePhone(rawPhone);
+
+  if(!phone){
+    toast("Informe um número de WhatsApp válido.");
+    return;
+  }
+
+  const message=$("prospectMessage").value;
+
+  const client={
+    id:uid("client"),
+    company,
+    responsible,
+    phone,
+    date:Date.now(),
+    status:"lead"
+  };
+
+  const existing=state.clients.find(c=>c.phone===phone);
+
+  if(existing){
+    existing.company=company;
+    existing.responsible=responsible;
+    existing.date=Date.now();
+    existing.status="lead";
+  }else{
+    state.clients.unshift(client);
+  }
+
+  saveState();
+
+  logAction(
+    "prospecting",
+    `Prospecção enviada para ${company}.`
+  );
+
+  openExternal(
+    "https://wa.me/"+phone+
+    "?text="+encodeURIComponent(message)
+  );
+
+  renderDashboard();
+
+  toast("Contato registrado.");
+});
+
+function normalizePhone(value){
+  let phone=value.replace(/\D/g,"");
+
+  if(!phone) return "";
+
+  if(phone.startsWith("55")){
+    return phone;
+  }
+
+  return "55"+phone;
+}
+
+/* =========================================================
+   CLIENTS
+========================================================= */
+
+function renderClients(){
+  const el=$("clientsList");
+
+  if(!state.clients.length){
+    el.innerHTML=`<div class="empty">Nenhum contato registrado.</div>`;
+    return;
+  }
+
+  el.innerHTML=state.clients.map(client=>`
+    <div class="list-item">
+      <div class="list-item-header">
+        <div>
+          <strong>${escapeHtml(client.company)}</strong>
+          <div class="small-text">
+            ${escapeHtml(client.responsible || "Responsável não informado")}
+          </div>
+        </div>
+
+        <span class="tag">${escapeHtml(client.status)}</span>
+      </div>
+
+      <p class="small-text" style="margin:10px 0">
+        WhatsApp: ${escapeHtml(client.phone)}
+      </p>
+
+      <p class="small-text">
+        Registrado em ${dateTime(client.date)}
+      </p>
+
+      <div class="actions">
+        <button class="btn btn-secondary" data-client-wa="${client.phone}">
+          Abrir WhatsApp
+        </button>
+
+        <button class="btn btn-danger" data-delete-client="${client.id}">
+          Excluir
+        </button>
+      </div>
+    </div>
+  `).join("");
+
+  el.querySelectorAll("[data-client-wa]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      openExternal("https://wa.me/"+btn.dataset.clientWa);
+    });
+  });
+
+  el.querySelectorAll("[data-delete-client]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteClient(btn.dataset.deleteClient);
+    });
+  });
+}
+
+function deleteClient(id){
+  const client=state.clients.find(c=>c.id===id);
+
+  if(!client) return;
+
+  if(!confirmDelete(`Excluir o contato "${client.company}"?`)) return;
+
+  state.clients=state.clients.filter(c=>c.id!==id);
+
+  saveState();
+
+  logAction(
+    "client_deleted",
+    `Contato excluído: ${client.company}.`
+  );
+
+  renderClients();
+  renderDashboard();
+
+  toast("Contato excluído.");
+}
+
+/* =========================================================
+   RESULTS / HISTORY / ACTIVITY
+========================================================= */
+
+function renderResults(){
+  const moneyTotal=state.projects.reduce(
+    (s,p)=>s+(Number(p.price)||0),0
+  );
+
+  const goal=Number(state.profile.weeklyGoal)||0;
+  const percent=goal?Math.min(100,moneyTotal/goal*100):0;
+
+  $("resultsContent").innerHTML=`
+    <div class="stats">
+      <div class="stat">
+        <span class="small-text">Projetos criados</span>
+        <div class="stat-value">${state.projects.length}</div>
+      </div>
+      <div class="stat">
+        <span class="small-text">Contatos</span>
+        <div class="stat-value">${state.clients.length}</div>
+      </div>
+      <div class="stat">
+        <span class="small-text">Valor registrado</span>
+        <div class="stat-value">${money(moneyTotal)}</div>
+      </div>
+      <div class="stat">
+        <span class="small-text">Meta semanal</span>
+        <div class="stat-value">${money(goal)}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>Progresso</strong>
+      <div class="progress" style="margin-top:12px">
+        <div style="width:${percent}%"></div>
+      </div>
+      <p class="small-text" style="margin-top:10px">
+        ${Math.round(percent)}% da meta registrada.
+      </p>
+    </div>
+  `;
+}
+
+function renderHistory(){
+  const el=$("historyList");
+
+  if(!state.history.length){
+    el.innerHTML=`<div class="empty">Nenhum histórico ainda.</div>`;
+    return;
+  }
+
+  el.innerHTML=state.history.map(item=>`
+    <div class="list-item">
+      <strong>${escapeHtml(item.text)}</strong>
+      <div class="small-text" style="margin-top:6px">
+        ${dateTime(item.date)}
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderActivity(){
+  const el=$("activityList");
+
+  if(!state.activity.length){
+    el.innerHTML=`<div class="empty">Nenhuma atividade ainda.</div>`;
+    return;
+  }
+
+  el.innerHTML=state.activity.map(item=>`
+    <div class="list-item">
+      <span class="tag">${escapeHtml(item.type)}</span>
+      <p style="margin:10px 0 5px">${escapeHtml(item.text)}</p>
+      <span class="small-text">${dateTime(item.date)}</span>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   PREFERENCES
+========================================================= */
+
+function renderPreferences(){
+  $("confirmDelete").checked=!!state.settings.confirmDelete;
+  $("autosave").checked=!!state.settings.autosave;
+}
+
+$("confirmDelete").addEventListener("change",()=>{
+  state.settings.confirmDelete=$("confirmDelete").checked;
+  saveState();
+});
+
+$("autosave").addEventListener("change",()=>{
+  state.settings.autosave=$("autosave").checked;
+  saveState();
+});
+
+/* =========================================================
+   PROMPT LIBRARY
+========================================================= */
+
+function renderPromptLibrary(){
+  const el=$("promptList");
+
+  if(!state.projects.length){
+    el.innerHTML=`
+      <div class="empty">
+        <p>A biblioteca mostra os prompts dos seus projetos reais.</p>
+        <button class="btn btn-primary" id="libraryCreateBtn">
+          Criar primeiro projeto
+        </button>
+      </div>
+    `;
+
+    $("libraryCreateBtn").addEventListener("click",()=>{
+      startBuilder();
+    });
+
+    return;
+  }
+
+  el.innerHTML=state.projects.map(p=>`
+    <div class="list-item">
+      <strong>${escapeHtml(p.company)}</strong>
+      <p class="small-text">${dateTime(p.date)}</p>
+
+      <div class="actions">
+        <button class="btn btn-secondary" data-copy-library="${p.id}">
+          Copiar prompt
+        </button>
+        <button class="btn btn-primary" data-open-library="${p.id}">
+          Abrir
+        </button>
+      </div>
+    </div>
+  `).join("");
+
+  el.querySelectorAll("[data-copy-library]").forEach(btn=>{
+    btn.addEventListener("click",async()=>{
+      const p=state.projects.find(x=>x.id===btn.dataset.copyLibrary);
+      if(!p)return;
+      await copyText(p.prompt);
+      toast("Prompt copiado.");
+    });
+  });
+
+  el.querySelectorAll("[data-open-library]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const p=state.projects.find(x=>x.id===btn.dataset.openLibrary);
+      if(p)openProjectModal(p);
+    });
+  });
+}
+
+/* =========================================================
+   TEMPLATES
+========================================================= */
+
+document.querySelectorAll("[data-template]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    startBuilder(btn.dataset.template);
+  });
+});
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    const textarea=document.createElement("textarea");
+    textarea.value=text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(){
+  $("modalBackdrop").classList.add("open");
+}
+
+function closeModal(){
+  $("modalBackdrop").classList.remove("open");
+}
+
+$("modalBackdrop").addEventListener("click",e=>{
+  if(e.target===$("modalBackdrop")){
+    closeModal();
+  }
+});
+
+/* =========================================================
+   MENU
+========================================================= */
+
+$("menuBtn").addEventListener("click",openDrawer);
+$("closeDrawer").addEventListener("click",closeDrawer);
+$("drawerBackdrop").addEventListener("click",closeDrawer);
+
+document.querySelectorAll("[data-screen]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    closeDrawer();
+    showScreen(btn.dataset.screen);
+  });
+});
+
+document.querySelectorAll("[data-back]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    showScreen(btn.dataset.back);
+  });
+});
+
+$("newSiteBtn").addEventListener("click",()=>{
+  startBuilder();
+});
+
+$("prospectBtn").addEventListener("click",()=>{
+  showScreen("prospecting");
+});
+
+$("supportBtn").addEventListener("click",()=>{
+  openExternal(
+    "https://wa.me/995467813?text="+
+    encodeURIComponent("Olá! Preciso de ajuda com o MINDSET.")
+  );
+});
+
+/* =========================================================
+   APPEARANCE EVENTS
+========================================================= */
+
+$("colorGrid").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-color]");
+  if(!btn)return;
+
+  state.settings.accent=btn.dataset.color;
+  saveState();
+  applyAppearance();
+  renderAppearance();
+});
+
+$("themeSelect").addEventListener("change",()=>{
+  state.settings.theme=$("themeSelect").value;
+  saveState();
+  applyAppearance();
+});
+
+$("sizeSelect").addEventListener("change",()=>{
+  state.settings.size=$("sizeSelect").value;
+  saveState();
+  applyAppearance();
+});
+
+$("densitySelect").addEventListener("change",()=>{
+  state.settings.density=$("densitySelect").value;
+  saveState();
+  applyAppearance();
+});
+
+$("cornersSelect").addEventListener("change",()=>{
+  state.settings.corners=$("cornersSelect").value;
+  saveState();
+  applyAppearance();
+});
+
+$("effectSelect").addEventListener("change",()=>{
+  state.settings.effect=$("effectSelect").value;
+  saveState();
+  applyAppearance();
+});
+
+$("animationSelect").addEventListener("change",()=>{
+  state.settings.animations=$("animationSelect").value;
+  saveState();
+  applyAppearance();
+});
+
+/* =========================================================
+   PWA
+========================================================= */
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(()=>console.log("MINDSET PWA: Service Worker ativo."))
+      .catch(err=>console.warn("Service Worker:",err));
+  });
+}
+
+/* =========================================================
+   SYSTEM THEME
+========================================================= */
+
+if(window.matchMedia){
+  const media=window.matchMedia("(prefers-color-scheme:light)");
+
+  if(media.addEventListener){
+    media.addEventListener("change",()=>{
+      if(state.settings.theme==="auto"){
+        applyAppearance();
+      }
+    });
+  }
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+applyAppearance();
+startApp();
+
+</script>
+</body>
+  </html>
